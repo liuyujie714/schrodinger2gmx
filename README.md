@@ -1,4 +1,4 @@
-# convert_to_itp.py
+# ffld_gmx_top.py
 
 将 Schrodinger 中的 `ffld_server` 工具输出的 OPLS_2005 力场参数转换为 GROMACS 的 `.itp` 和 `.top` 拓扑文件。
 
