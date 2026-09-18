@@ -11,7 +11,7 @@
 ## 用法
 
 ```bash
-python convert_to_itp.py <input.out>
+python ffld_gmx_top.py <input.out>
 ```
 
 | 参数         | 必需 | 说明                                |
@@ -24,7 +24,7 @@ python convert_to_itp.py <input.out>
 ### 示例
 
 ```bash
-python3 convert_to_itp.py input.out
+python3 ffld_gmx_top.py input.out
 ```
 
 ## 单位换算
