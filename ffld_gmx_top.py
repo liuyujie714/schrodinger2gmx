@@ -214,9 +214,11 @@ ELEM_ZNUM = {
 }
 
 
-def elem_of(symbol):
-    m = re.match(r'^([A-Za-z]+)', symbol)
-    return m.group(1) if m else 'C'
+def elem_of(atom_name):
+    m = re.match(r'^([A-Za-z]+)', atom_name)
+    if not m:
+        return None
+    return m.group(1)
 
 
 def main():
@@ -251,6 +253,18 @@ def main():
     molecule_name = "UNK"
     type_prefix = "mm_"
 
+    for at in atomtypes:
+        elem = elem_of(at['atom_name'])
+        if elem is None:
+            print("Error: cannot parse element from atom name '%s' (atom index %d)."
+                  % (at['atom_name'], at['index']))
+            sys.exit(1)
+        if elem not in ELEM_MASS or elem not in ELEM_ZNUM:
+            print("Error: element '%s' (from atom name '%s', atom index %d) "
+                  "is not in the element table."
+                  % (elem, at['atom_name'], at['index']))
+            sys.exit(1)
+
     unique_types = {}
     for at in atomtypes:
         tname = "%s%s" % (type_prefix, at['type_num'])
@@ -260,9 +274,9 @@ def main():
     atomtypes_lines = []
     atomtypes_lines.append("; name        at.num  mass      charge    ptype  sigma(nm)   epsilon(kJ/mol)")
     for tname, at in unique_types.items():
-        elem = elem_of(at['symbol'])
-        mass = ELEM_MASS.get(elem, 12.01100)
-        znum = ELEM_ZNUM.get(elem, 6)
+        elem = elem_of(at['atom_name'])
+        mass = ELEM_MASS[elem]
+        znum = ELEM_ZNUM[elem]
         sigma_nm = at['sigma'] / 10.0
         eps_kj = at['epsilon'] * 4.184
         atomtypes_lines.append("%-11s %6d  %8.5f  %8.4f  A  %10.6f  %12.6f" % (
@@ -274,8 +288,8 @@ def main():
     for at in atomtypes:
         idx = at['index']
         tname = "%s%s" % (type_prefix, at['type_num'])
-        elem = elem_of(at['symbol'])
-        mass = ELEM_MASS.get(elem, 12.01100)
+        elem = elem_of(at['atom_name'])
+        mass = ELEM_MASS[elem]
         q = at['charge']
         atoms_lines.append("%5d  %-11s %5d  %-7s %-5s %5d  %10.6f  %8.5f" % (
             idx, tname, 1, molecule_name, at['atom_name'], idx, q, mass))

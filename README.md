@@ -52,7 +52,3 @@ molecule_name = "UNK"    # 分子名
 type_prefix   = "mm_"    # 原子类型前缀
 ```
 
-# 注意
-
-- 元素符号无法识别时默认按碳处理
-
