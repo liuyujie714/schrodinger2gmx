@@ -14,17 +14,16 @@
 python ffld_gmx_top.py <input.out>
 ```
 
-| 参数         | 必需 | 说明                                |
-| ------------ | ---- | ----------------------------------- |
-| `input.out`  | 是   | 输入 ffld_server 生成的力场参数文件 |
-| `output.itp` | 否   | 输出 itp 文件名，默认与输入同名     |
+| 参数        | 必需 | 说明                                |
+| ----------- | ---- | ----------------------------------- |
+| `input.out` | 是   | 输入 ffld_server 生成的力场参数文件 |
 
-同时生成同名的 `.top` 文件。
+同时生成同名的 `input.itp`和`input.top` 文件。
 
 ### 示例
 
 ```bash
-python3 ffld_gmx_top.py input.out
+python ffld_gmx_top.py input.out
 ```
 
 ## 单位换算
